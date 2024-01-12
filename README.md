@@ -12,7 +12,7 @@ Download the source code and install it using the `go install` command.
 
 Alternatively, use Docker to run the service in a container:
 ```
-docker run -d -p 8080:8080 samwierema/go-qr-generator
+docker run -d -p 8080:8080 --platform linux/amd64 cowrvalera/go-qr-generator:1.0.0
 ```
 
 ## References

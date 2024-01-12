@@ -20,7 +20,13 @@ func main() {
 }
 
 func QrGenerator(w http.ResponseWriter, r *http.Request) {
-	data := r.URL.Query().Get("data")
+	r.ParseForm()
+
+	data := r.FormValue("data")
+	if data == "" {
+		data = r.URL.Query().Get("data")
+	}
+
 	if data == "" {
 		http.Error(w, "", http.StatusBadRequest)
 		return
@@ -38,13 +44,16 @@ func QrGenerator(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	size := r.URL.Query().Get("size")
+	size := r.FormValue("size")
 	if size == "" {
-		size = "250"
+		size = r.URL.Query().Get("size")
+	}
+	if size == "" {
+		size = "200"
 	}
 	intsize, err := strconv.Atoi(size)
 	if err != nil {
-		intsize = 250
+		intsize = 200
 	}
 
 	// Scale the barcode to the appropriate size
